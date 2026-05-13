@@ -32,17 +32,17 @@
     // --- Main Application ---
     function App() {
       // Global State
-      const [purchasePrice, setPurchasePrice] = useState(2500000);
+      const [purchasePrice, setPurchasePrice] = useState(1700000);
       const [resRate, setResRate] = useState(900);
       const [comRate, setComRate] = useState(500);
 
       // Units State
       const [units, setUnits] = useState([
-        { id: 1, name: 'Top Floor', type: 'Residential', sqft: 1200 },
-        { id: 2, name: 'Middle Floor', type: 'Residential', sqft: 1200 },
-        { id: 3, name: 'Ground Floor', type: 'Commercial', sqft: 1000 },
+        { id: 1, name: 'Top Floor', type: 'Residential', sqft: 1000 },
+        { id: 2, name: 'Middle Floor', type: 'Residential', sqft: 1000 },
+        { id: 3, name: 'Ground Floor', type: 'Commercial', sqft: 700 },
         { id: 4, name: 'Studio', type: 'Residential', sqft: 400 },
-        { id: 5, name: 'Garage', type: 'Commercial', sqft: 400 },
+        { id: 5, name: 'Garage', type: 'Residential', sqft: 400 },
       ]);
 
       // Handlers
