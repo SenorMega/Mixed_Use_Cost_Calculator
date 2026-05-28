@@ -25,9 +25,14 @@
     const PieChartIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>);
     const HomeIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>);
     const StoreIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>);
-    const UsersIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>);
+    const BedIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>);
     const PlusIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>);
     const TrashIcon = ({ className, size }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>);
+
+    // Formatters
+    const formatCurrency = (value) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
+    const formatPercent = (value) => new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+
 
     // --- Component 1: TIC/LLC Building Calculator ---
     function TicCalculator() {
@@ -58,9 +63,7 @@
       };
 
       const handleRemoveUnit = (id) => {
-        if (units.length > 1) {
-          setUnits(units.filter(unit => unit.id !== id));
-        }
+        if (units.length > 1) setUnits(units.filter(unit => unit.id !== id));
       };
 
       // Calculations
@@ -87,16 +90,11 @@
         };
       }, [units, resRate, comRate, purchasePrice]);
 
-      // Formatters
-      const formatCurrency = (value) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
-      const formatPercent = (value) => new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
-
       return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column: Controls */}
           <div className="lg:col-span-1 space-y-6">
             
-            {/* Building Purchase Price */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
               <h2 className="text-lg font-semibold mb-4 flex items-center">
                 <Building2Icon className="mr-2 text-slate-400" size={20}/> 
@@ -115,7 +113,6 @@
               </div>
             </div>
 
-            {/* Valuation Sliders */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
               <h2 className="text-lg font-semibold flex items-center">
                 <PieChartIcon className="mr-2 text-slate-400" size={20}/> 
@@ -123,7 +120,6 @@
               </h2>
               <p className="text-sm text-slate-500 pb-2">Set the estimated price per sqft to establish the ratio between unit types.</p>
 
-              {/* Residential Rate Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <label className="text-sm font-medium flex items-center text-indigo-700">
@@ -139,7 +135,6 @@
                 />
               </div>
 
-              {/* Commercial Rate Slider */}
               <div className="space-y-3 pt-4 border-t border-slate-100">
                 <div className="flex justify-between items-center">
                   <label className="text-sm font-medium flex items-center text-emerald-700">
@@ -160,7 +155,6 @@
           {/* Right Column: Units & Results */}
           <div className="lg:col-span-2 space-y-6">
             
-            {/* Units Input Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
               <div className="p-6 border-b border-slate-100 bg-slate-50">
                 <h2 className="text-lg font-semibold">Building Layout & Units</h2>
@@ -179,45 +173,22 @@
                     {units.map((unit) => (
                       <tr key={unit.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors group">
                         <td className="p-4">
-                          <input 
-                            type="text" 
-                            value={unit.name}
-                            onChange={(e) => handleUnitChange(unit.id, 'name', e.target.value)}
-                            className="w-full bg-transparent border-b border-transparent focus:border-blue-500 focus:outline-none font-medium"
-                          />
+                          <input type="text" value={unit.name} onChange={(e) => handleUnitChange(unit.id, 'name', e.target.value)} className="w-full bg-transparent border-b border-transparent focus:border-blue-500 focus:outline-none font-medium"/>
                         </td>
                         <td className="p-4">
-                          <select 
-                            value={unit.type}
-                            onChange={(e) => handleUnitChange(unit.id, 'type', e.target.value)}
-                            className={`px-3 py-1.5 rounded-lg text-sm font-medium border-0 focus:ring-2 focus:ring-blue-500 outline-none ${
-                              unit.type === 'Residential' ? 'bg-indigo-50 text-indigo-700' : 'bg-emerald-50 text-emerald-700'
-                            }`}
-                          >
+                          <select value={unit.type} onChange={(e) => handleUnitChange(unit.id, 'type', e.target.value)} className={`px-3 py-1.5 rounded-lg text-sm font-medium border-0 focus:ring-2 focus:ring-blue-500 outline-none ${unit.type === 'Residential' ? 'bg-indigo-50 text-indigo-700' : 'bg-emerald-50 text-emerald-700'}`}>
                             <option value="Residential">Residential</option>
                             <option value="Commercial">Commercial</option>
                           </select>
                         </td>
                         <td className="p-4">
                           <div className="flex items-center">
-                            <input 
-                              type="number" 
-                              value={unit.sqft}
-                              onChange={(e) => handleUnitChange(unit.id, 'sqft', e.target.value)}
-                              className="w-24 px-3 py-1.5 bg-slate-100 border-transparent rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            />
+                            <input type="number" value={unit.sqft} onChange={(e) => handleUnitChange(unit.id, 'sqft', e.target.value)} className="w-24 px-3 py-1.5 bg-slate-100 border-transparent rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
                             <span className="ml-2 text-slate-400 text-sm">sqft</span>
                           </div>
                         </td>
                         <td className="p-4 text-center align-middle">
-                          <button 
-                            onClick={() => handleRemoveUnit(unit.id)}
-                            disabled={units.length === 1}
-                            className={`text-slate-300 transition-colors p-1.5 rounded-md ${units.length === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-red-500 hover:bg-red-50'}`}
-                            title="Remove unit"
-                          >
-                            <TrashIcon size={18} />
-                          </button>
+                          <button onClick={() => handleRemoveUnit(unit.id)} disabled={units.length === 1} className={`text-slate-300 transition-colors p-1.5 rounded-md ${units.length === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-red-500 hover:bg-red-50'}`}><TrashIcon size={18} /></button>
                         </td>
                       </tr>
                     ))}
@@ -225,17 +196,10 @@
                 </table>
               </div>
               <div className="p-3 bg-slate-50 border-t border-slate-100 flex justify-center">
-                <button 
-                  onClick={handleAddUnit}
-                  className="flex items-center space-x-1 px-4 py-2 text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
-                >
-                  <PlusIcon size={16} />
-                  <span>Add Unit</span>
-                </button>
+                <button onClick={handleAddUnit} className="flex items-center space-x-1 px-4 py-2 text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"><PlusIcon size={16} /><span>Add Unit</span></button>
               </div>
             </div>
 
-            {/* Final Cost Breakdown */}
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
               <div className="p-6 border-b border-slate-100 bg-blue-50/50 flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-blue-900">Final Cost Breakdown</h2>
@@ -258,18 +222,12 @@
                       <tr key={unit.id} className="border-b border-slate-100 last:border-0">
                         <td className="p-4">
                           <div className="font-medium text-slate-900">{unit.name}</div>
-                          <div className="text-xs text-slate-500 mt-0.5">
-                            {unit.sqft} sqft @ {formatCurrency(unit.rate)}/sqft
-                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">{unit.sqft} sqft @ {formatCurrency(unit.rate)}/sqft</div>
                         </td>
                         <td className="p-4 text-right">
-                          <span className="inline-block px-2.5 py-1 bg-slate-100 rounded-md font-semibold text-slate-700">
-                            {formatPercent(unit.percentage)}
-                          </span>
+                          <span className="inline-block px-2.5 py-1 bg-slate-100 rounded-md font-semibold text-slate-700">{formatPercent(unit.percentage)}</span>
                         </td>
-                        <td className="p-4 text-right font-bold text-lg text-slate-900">
-                          {formatCurrency(unit.actualCost)}
-                        </td>
+                        <td className="p-4 text-right font-bold text-lg text-slate-900">{formatCurrency(unit.actualCost)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -289,17 +247,231 @@
       );
     }
 
-    // --- Component 2: Rent Splitter Workspace (Placeholder) ---
+    // --- Component 2: Rent Splitter Workspace ---
     function RentSplitter() {
+      // Global State
+      const [totalRent, setTotalRent] = useState(4200);
+      const [commonSqft, setCommonSqft] = useState(500);
+
+      // Rooms State
+      const [rooms, setRooms] = useState([
+        { id: 1, name: 'Master Bedroom', sqft: 250, adjustment: 100 },
+        { id: 2, name: 'Bedroom 2', sqft: 150, adjustment: 0 },
+        { id: 3, name: 'Small Bedroom', sqft: 100, adjustment: -50 },
+      ]);
+
+      // Handlers
+      const handleRoomChange = (id, field, value) => {
+        setRooms(rooms.map(room => 
+          room.id === id ? { ...room, [field]: value } : room
+        ));
+      };
+
+      const handleAddRoom = () => {
+        const newId = rooms.length > 0 ? Math.max(...rooms.map(r => r.id)) + 1 : 1;
+        setRooms([...rooms, { id: newId, name: `Bedroom ${newId}`, sqft: 150, adjustment: 0 }]);
+      };
+
+      const handleRemoveRoom = (id) => {
+        if (rooms.length > 1) setRooms(rooms.filter(room => room.id !== id));
+      };
+
+      // Calculations
+      const calculatedData = useMemo(() => {
+        const numRooms = rooms.length;
+        const totalPrivateSqft = rooms.reduce((sum, room) => sum + (Number(room.sqft) || 0), 0);
+        const totalAptSqft = (Number(commonSqft) || 0) + totalPrivateSqft;
+        const totalAdjustments = rooms.reduce((sum, room) => sum + (Number(room.adjustment) || 0), 0);
+
+        // Deduct fixed adjustments from the total rent pool before dividing the rest by square footage
+        const rentToSplit = (Number(totalRent) || 0) - totalAdjustments;
+        const pricePerSqft = totalAptSqft > 0 ? rentToSplit / totalAptSqft : 0;
+        const commonSqftPerRoom = numRooms > 0 ? (Number(commonSqft) || 0) / numRooms : 0;
+
+        return {
+          totalAptSqft,
+          pricePerSqft,
+          rooms: rooms.map(room => {
+            const privateSqft = Number(room.sqft) || 0;
+            const assignedSqft = privateSqft + commonSqftPerRoom;
+            const baseCost = assignedSqft * pricePerSqft;
+            const finalCost = baseCost + (Number(room.adjustment) || 0);
+            
+            return { 
+              ...room, 
+              privateSqft, 
+              assignedSqft, 
+              finalCost: Math.max(0, finalCost) // Prevent negative rent 
+            };
+          })
+        };
+      }, [rooms, totalRent, commonSqft]);
+
       return (
-        <div className="bg-white rounded-2xl p-12 shadow-sm border border-slate-200 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mb-4">
-            <UsersIcon size={32} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column: Controls */}
+          <div className="lg:col-span-1 space-y-6">
+            
+            {/* Total Rent & Common Area */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+              
+              <div>
+                <h2 className="text-lg font-semibold mb-2 flex items-center">
+                  <DollarSignIcon className="mr-2 text-slate-400" size={20}/> 
+                  Total Monthly Rent
+                </h2>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <DollarSignIcon className="text-slate-400" size={16}/>
+                  </div>
+                  <input 
+                    type="number" 
+                    value={totalRent}
+                    onChange={(e) => setTotalRent(Number(e.target.value))}
+                    className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-lg font-medium"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100">
+                <h2 className="text-lg font-semibold mb-2 flex items-center">
+                  <PieChartIcon className="mr-2 text-slate-400" size={20}/> 
+                  Shared Common Area
+                </h2>
+                <p className="text-xs text-slate-500 mb-3">Living room, kitchen, and shared bathrooms. Divided equally among all roommates.</p>
+                <div className="flex items-center">
+                  <input 
+                    type="number" 
+                    value={commonSqft}
+                    onChange={(e) => setCommonSqft(Number(e.target.value))}
+                    className="w-32 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-lg font-medium"
+                  />
+                  <span className="ml-3 text-slate-500 font-medium">sqft</span>
+                </div>
+              </div>
+
+            </div>
+            
+            {/* Info Box */}
+            <div className="bg-emerald-50 rounded-2xl p-5 border border-emerald-100">
+              <h3 className="text-sm font-bold text-emerald-800 mb-2">How Adjustments Work</h3>
+              <p className="text-xs text-emerald-700 leading-relaxed">
+                Add fixed dollars for perks, or subtract for drawbacks. <br/><br/>
+                <strong>En-suite Bath?</strong> Add <b>100</b>.<br/>
+                <strong>No closet?</strong> Add <b>-50</b>.<br/><br/>
+                Adjustments are deducted from the total rent pool before the rest is split by square footage.
+              </p>
+            </div>
+
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Apartment Rent Splitter</h2>
-          <p className="text-slate-500 max-w-md mx-auto">
-            This mode is ready for us to build! We'll add inputs for total rent, common area square footage, and individual bedroom modifiers.
-          </p>
+
+          {/* Right Column: Rooms & Results */}
+          <div className="lg:col-span-2 space-y-6">
+            
+            {/* Rooms Input Table */}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div className="p-6 border-b border-slate-100 bg-slate-50">
+                <h2 className="text-lg font-semibold">Bedrooms & Roommates</h2>
+              </div>
+              <div className="p-0 overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50 text-slate-500 text-sm border-b border-slate-200">
+                      <th className="p-4 font-medium">Room Name</th>
+                      <th className="p-4 font-medium">Private Area</th>
+                      <th className="p-4 font-medium">Adjustments ($)</th>
+                      <th className="p-4 font-medium text-center w-12"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rooms.map((room) => (
+                      <tr key={room.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                        <td className="p-4">
+                          <input type="text" value={room.name} onChange={(e) => handleRoomChange(room.id, 'name', e.target.value)} className="w-full bg-transparent border-b border-transparent focus:border-emerald-500 focus:outline-none font-medium"/>
+                        </td>
+                        <td className="p-4">
+                          <div className="flex items-center">
+                            <input type="number" value={room.sqft} onChange={(e) => handleRoomChange(room.id, 'sqft', e.target.value)} className="w-20 px-3 py-1.5 bg-slate-100 border-transparent rounded-lg focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"/>
+                            <span className="ml-2 text-slate-400 text-sm">sqft</span>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="flex items-center">
+                            <span className="text-slate-400 mr-1">$</span>
+                            <input type="number" value={room.adjustment} onChange={(e) => handleRoomChange(room.id, 'adjustment', e.target.value)} className="w-20 px-3 py-1.5 bg-slate-100 border-transparent rounded-lg focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none font-medium"/>
+                          </div>
+                        </td>
+                        <td className="p-4 text-center align-middle">
+                          <button onClick={() => handleRemoveRoom(room.id)} disabled={rooms.length === 1} className={`text-slate-300 transition-colors p-1.5 rounded-md ${rooms.length === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-red-500 hover:bg-red-50'}`}><TrashIcon size={18} /></button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="p-3 bg-slate-50 border-t border-slate-100 flex justify-center">
+                <button onClick={handleAddRoom} className="flex items-center space-x-1 px-4 py-2 text-sm font-semibold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors"><PlusIcon size={16} /><span>Add Room</span></button>
+              </div>
+            </div>
+
+            {/* Final Rent Breakdown */}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div className="p-6 border-b border-slate-100 bg-emerald-50/50 flex justify-between items-center">
+                <h2 className="text-lg font-semibold text-emerald-900">Fair Rent Breakdown</h2>
+                <div className="text-right">
+                  <span className="text-sm text-emerald-600 font-medium block">Total Apt Size</span>
+                  <span className="text-xl font-bold text-emerald-900">{calculatedData.totalAptSqft.toLocaleString()} sqft</span>
+                </div>
+              </div>
+              <div className="p-0 overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50 text-slate-500 text-sm border-b border-slate-200">
+                      <th className="p-4 font-medium">Roommate</th>
+                      <th className="p-4 font-medium text-right hidden sm:table-cell">True Footprint</th>
+                      <th className="p-4 font-medium text-right">Monthly Rent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {calculatedData.rooms.map((room) => (
+                      <tr key={room.id} className="border-b border-slate-100 last:border-0">
+                        <td className="p-4">
+                          <div className="font-medium text-slate-900 flex items-center">
+                            <BedIcon size={16} className="mr-2 text-slate-400" />
+                            {room.name}
+                          </div>
+                          {room.adjustment !== 0 && (
+                            <div className="text-xs text-emerald-600 mt-1 font-medium">
+                              Includes {room.adjustment > 0 ? '+' : ''}{formatCurrency(room.adjustment)} adjustment
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-4 text-right hidden sm:table-cell">
+                          <span className="inline-block px-2.5 py-1 bg-slate-100 rounded-md text-sm text-slate-600">
+                            {room.assignedSqft.toFixed(0)} sqft
+                          </span>
+                          <div className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">
+                            Private + Shared
+                          </div>
+                        </td>
+                        <td className="p-4 text-right font-bold text-lg text-slate-900">
+                          {formatCurrency(room.finalCost)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot className="bg-slate-50">
+                    <tr>
+                      <td className="p-4 font-semibold text-slate-500 text-right hidden sm:table-cell" colSpan="2">Total:</td>
+                      <td className="p-4 font-semibold text-slate-500 text-right sm:hidden">Total:</td>
+                      <td className="p-4 text-right font-bold text-emerald-600 text-xl">{formatCurrency(totalRent)}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+          </div>
         </div>
       );
     }
